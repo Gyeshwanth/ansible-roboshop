@@ -1,6 +1,6 @@
 - name: mongodb configure play
   hosts: mongodb
-  become: true
+  become: yes
   tasks:
 
     - name: copying mongodb

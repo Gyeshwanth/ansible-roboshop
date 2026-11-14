@@ -1,0 +1,78 @@
+- name: configure catalogue server
+  hosts: catalogue
+  become: yes
+  tasks:
+    - name: disable nodejs module
+      ansible.builtin.command: dnf module disable nodejs -y
+
+    - name: enable nodejs 20 module
+      ansible.builtin.command:  dnf module enable nodejs:20 -y
+
+    - name: installing nodejs
+      ansible.builtin.dnf:
+        name: nodejs
+        state: present
+
+    - name: Create roboshop system user
+      ansible.builtin.user:
+        name: roboshop
+        system: true
+        home: /app
+        shell: /sbin/nologin
+        comment: "roboshop system user"
+        state: present
+
+    - name: create directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+
+    - name: Download catalogue
+      ansible.builtin.get_url:
+        url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+        dest: /tmp/catalogue.zip
+
+    - name: Extract catalogue.zip
+      ansible.builtin.unarchive:
+        src: /tmp/catalogue.zip
+        dest: /app
+
+    - name: Install node.js package.
+      community.general.npm:
+        path: /app
+
+    - name: copying catalogue service
+      ansible.builtin.copy:
+        src: catalogue.service
+        dest: /etc/systemd/system/catalogue.service
+
+    - name: daemon_reload catalogue/systemctl daemon reload
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+
+    - name: started and enabled catalogue
+      ansible.builtin.service:
+        name: catalogue
+        enabled: true
+
+    - name: copying mongodb
+      ansible.builtin.copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
+
+    - name: installing mongodb-mongosh
+      ansible.builtin.dnf:
+        name: mongodb-mongosh
+        state: present
+
+#    - name: load data to mongodb
+#      community.mongodb.mongodb_shell:
+#        login_host: mongodb.yefy.shop
+#        file: "/app/db/master-data.js"
+#        idempotent: yes
+
+    - name: check products are present
+      ansible.builtin.command: mongosh --host mongodb.yefy.shop --eval 'db.getMongo().getDBNames().indexOf("catalogue")
+      register: catalogue-output
+
+
