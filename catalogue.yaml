@@ -65,14 +65,8 @@
         name: mongodb-mongosh
         state: present
 
-#    - name: load data to mongodb
-#      community.mongodb.mongodb_shell:
-#        login_host: mongodb.yefy.shop
-#        file: "/app/db/master-data.js"
-#        idempotent: yes
-
     - name: check products are present
-      ansible.builtin.command: mongosh --host mongodb.yefy.shop --eval 'db.getMongo().getDBNames().indexOf("catalogue")
+      ansible.builtin.command: mongosh --host mongodb.yefy.shop --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
       register: catalogue-output
 
 
