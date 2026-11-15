@@ -1,9 +1,4 @@
-
-- name: Configure RabbitMQ repository
-  ansible.builtin.copy:
-    dest: /etc/yum.repos.d/rabbitmq.repo
-    content: |
-      [modern-erlang]
+[modern-erlang]
       name=modern-erlang-el9
       baseurl=https://yum1.rabbitmq.com/erlang/el/9/$basearch
               https://yum2.rabbitmq.com/erlang/el/9/$basearch
