@@ -1,0 +1,23 @@
+- name: configure mysql server
+  hosts: mysql
+  become: yes
+  vars_prompt:
+    - name: PASSWORD
+      prompt: please enter the mysql password
+      private: true
+  tasks:
+    - name: install mysqldb
+      ansible.builtin.dnf:
+        name: mysql-server
+        state: present
+
+    - name: start and enable mysql
+      ansible.builtin.service:
+        name: mysqld
+        state: started
+        enabled: true
+
+    - name: set password of mysql db
+      ansible.builtin.command:  "mysql_secure_installation --set-root-pass {{ PASSWORD }}"
+
+

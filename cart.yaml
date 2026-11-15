@@ -48,8 +48,9 @@
     - name: daemon_reload catalogue/systemctl daemon reload
       ansible.builtin.systemd_service:
         daemon_reload: true
+
     - name: start and enable nodejs
-      ansible.builtin.dnf:
+      ansible.builtin.service:
         name: nodejs
         state: started
         enabled: yes
