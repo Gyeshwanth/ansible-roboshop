@@ -40,17 +40,17 @@
       community.general.npm:
         path: /app
 
-    - name: copying catalogue service
+    - name: copying cart service
       ansible.builtin.copy:
-        src: catalogue.service
-        dest: /etc/systemd/system/catalogue.service
+        src: cart.service
+        dest: /etc/systemd/system/cart.service
 
-    - name: daemon_reload catalogue/systemctl daemon reload
+    - name: daemon_reload cart/systemctl daemon reload
       ansible.builtin.systemd_service:
         daemon_reload: true
 
     - name: start and enable nodejs
-      ansible.builtin.service:
+      ansible.builtin.dnf:
         name: nodejs
         state: started
         enabled: yes
