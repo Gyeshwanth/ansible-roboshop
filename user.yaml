@@ -50,9 +50,9 @@
       ansible.builtin.systemd_service:
         daemon_reload: true
 
-    - name: start and enable nodejs
-      ansible.builtin.dnf:
-        name: nodejs
+    - name: start and enable user
+      ansible.builtin.service:
+        name: user
         state: started
         enabled: yes
 

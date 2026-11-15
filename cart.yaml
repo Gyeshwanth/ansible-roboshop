@@ -50,8 +50,8 @@
         daemon_reload: true
 
     - name: start and enable nodejs
-      ansible.builtin.dnf:
-        name: nodejs
+      ansible.builtin.service:
+        name: cart
         state: started
         enabled: yes
 
