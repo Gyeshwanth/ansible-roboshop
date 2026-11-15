@@ -7,9 +7,6 @@
         src: rabbitmq.repo
         dest: /etc/yum.repos.d/rabbitmq.repo
 
-    - name: clean dnf metadata cache
-      ansible.builtin.command: dnf clean all
-
     - name: install rabbitmq-server
       ansible.builtin.dnf:
         name: rabbitmq-server
@@ -21,7 +18,7 @@
         state: started
         enabled: yes
 
-    - name: create rabbitmq user
+    - name: create rabbitmq rabbitmq
       community.rabbitmq.rabbitmq_user:
         user: roboshop
         password: roboshop123
