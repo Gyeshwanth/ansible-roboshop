@@ -9,8 +9,8 @@
       loop:
         - maven
         - mysql
+        - mysql-server
         - python3-PyMySQL
-        - mysqldump
 
     - name: Create roboshop system user
       ansible.builtin.user:
