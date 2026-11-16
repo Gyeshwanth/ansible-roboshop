@@ -12,6 +12,4 @@ do
         -e "ansible_user=ec2-user" \
         -e "ansible_password=DevOps321" \
         "$playbook.yaml"
-
-    sleep 10
 done
