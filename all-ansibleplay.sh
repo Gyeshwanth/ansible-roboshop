@@ -1,6 +1,6 @@
 #!/bin/bash
 
-playsbooks= ("mongodb" "mysql" "redis" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "frontend")
+playsbooks=("mongodb" "mysql" "redis" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "frontend")
 
 
 for playbook  in '$@'
